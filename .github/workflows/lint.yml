@@ -27,10 +27,13 @@ jobs:
         with:
           submodules: recursive
 
-      - name: Installing protoc-gen-go
+      - name: Install protoc-gen-go and protoc-gen-go-grpc
         run: |
-          go get github.com/golang/protobuf/protoc-gen-go@v1.5.4
-          go get google.golang.org/grpc/cmd/protoc-gen-go-grpc@v1.5.1
+          go install github.com/golang/protobuf/protoc-gen-go@v1.5.4
+          go install google.golang.org/grpc/cmd/protoc-gen-go-grpc@v1.5.1
+        env:
+          GOBIN: /home/runner/go/bin
+        shell: bash
 
       - name: Generate protobuf
         run: |
