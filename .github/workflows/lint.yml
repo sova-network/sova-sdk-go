@@ -17,11 +17,20 @@ jobs:
         with:
           go-version: '1.21.x'
 
+      - name: Install Protoc
+        uses: arduino/setup-protoc@v3
+        with:
+          version: "27.x"
+
       - name: Check out code
         uses: actions/checkout@v4
 
       - name: Install dependencies
         run: go mod download
+
+      - name: Generate protobuf
+        run: |
+          make protoc
 
       - name: Run golangci-lint
         uses: golangci/golangci-lint-action@v6
