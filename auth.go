@@ -3,11 +3,13 @@ package mevton_sdk_go
 import (
 	"context"
 	"crypto/ed25519"
+	"crypto/x509"
 	"fmt"
+	"google.golang.org/grpc/credentials"
+	"google.golang.org/grpc/credentials/insecure"
 
 	authpb "github.com/mevton-labs/mevton-sdk-go/generated"
 	"google.golang.org/grpc"
-	"google.golang.org/grpc/credentials/insecure"
 )
 
 // AuthClient wraps the AuthServiceClient and provides convenience methods.
@@ -19,13 +21,29 @@ type AuthClient struct {
 }
 
 // NewAuthClient creates a new AuthClient instance.
+func NewAuthClient(authUrl string, privateKey []byte, caPem *[]byte, domainName *string) (*AuthClient, error) {
+	var conn *grpc.ClientConn
+	var err error
 
-// TODO use conn as a parameter; conn *grpc.ClientConn
-func NewAuthClient(authUrl string, privateKey []byte) (*AuthClient, error) {
-	conn, err := grpc.NewClient(authUrl, grpc.WithTransportCredentials(insecure.NewCredentials()))
-	if err != nil {
-		return nil, fmt.Errorf("failed to connect to block engine: %v", err)
+	if caPem != nil && domainName != nil {
+		certPool := x509.NewCertPool()
+		if !certPool.AppendCertsFromPEM([]byte(*caPem)) {
+			return nil, fmt.Errorf("failed to parse CA certificate")
+		}
+
+		// Configure TLS with CA certificate and domain name
+		creds := credentials.NewClientTLSFromCert(certPool, *domainName)
+		conn, err = grpc.NewClient(authUrl, grpc.WithTransportCredentials(creds))
+		if err != nil {
+			return nil, fmt.Errorf("failed to connect with TLS: %v", err)
+		}
+	} else {
+		conn, err = grpc.NewClient(authUrl, grpc.WithTransportCredentials(insecure.NewCredentials()))
+		if err != nil {
+			return nil, fmt.Errorf("failed to connect to searcher service: %v", err)
+		}
 	}
+
 	client := authpb.NewAuthServiceClient(conn)
 	key := ed25519.PrivateKey(privateKey)
 	return &AuthClient{
@@ -38,8 +56,9 @@ func NewAuthClient(authUrl string, privateKey []byte) (*AuthClient, error) {
 
 func (a *AuthClient) Authenticate() error {
 	ctx := context.Background()
-	privKey := a.key
+	privKey := ed25519.PrivateKey(a.key)
 	pubkey := a.key.Public().(ed25519.PublicKey)
+	secretKey := append(privKey, pubkey...)
 	challengeReq := &authpb.GenerateAuthChallengeRequest{
 		Pubkey: pubkey,
 	}
@@ -50,8 +69,8 @@ func (a *AuthClient) Authenticate() error {
 	}
 
 	challenge := challengeResp.GetChallenge()
-	signedChallenge := ed25519.Sign(privKey, challenge)
 
+	signedChallenge := ed25519.Sign(secretKey[:], challenge)
 	tokenReq := &authpb.GenerateAuthTokensRequest{
 		Challenge:       challenge,
 		SignedChallenge: signedChallenge,
