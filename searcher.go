@@ -76,7 +76,6 @@ func (s *MevtonSearcher) Subscribe(ctx context.Context, subscription *types.Memp
 }
 
 func (s *MevtonSearcher) SubscribeByAddress(ctx context.Context, addresses []string, onData func(*types.MempoolPacket)) error {
-	ctx = s.addAuthorizationMetadata(ctx)
 	return s.Subscribe(ctx, &types.MempoolSubscription{
 		Addresses: &types.AddressSubscriptionV0{
 			Address: addresses,
