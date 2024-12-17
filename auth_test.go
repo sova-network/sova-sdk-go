@@ -14,7 +14,6 @@ type MockAuthServiceClient struct {
 	types.AuthServiceServer
 }
 
-func (receiver MockAuthServiceClient) mustEmbedUnimplementedAuthServiceServer() {}
 
 func (receiver MockAuthServiceClient) GenerateAuthChallenge(context.Context, *types.GenerateAuthChallengeRequest) (*types.GenerateAuthChallengeResponse, error) {
 	return &types.GenerateAuthChallengeResponse{
