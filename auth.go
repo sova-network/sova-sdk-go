@@ -45,10 +45,10 @@ func NewAuthClient(authUrl string, privateKey []byte, caPem *[]byte, domainName 
 	}
 
 	client := authpb.NewAuthServiceClient(conn)
-	key := ed25519.PrivateKey(privateKey)
+	privKey := ed25519.NewKeyFromSeed(privateKey)
 	return &AuthClient{
 		client:       client,
-		key:          key,
+		key:          privKey,
 		accessToken:  nil,
 		refreshToken: nil,
 	}, nil
@@ -56,9 +56,7 @@ func NewAuthClient(authUrl string, privateKey []byte, caPem *[]byte, domainName 
 
 func (a *AuthClient) Authenticate() error {
 	ctx := context.Background()
-	privKey := ed25519.PrivateKey(a.key)
 	pubkey := a.key.Public().(ed25519.PublicKey)
-	secretKey := append(privKey, pubkey...)
 	challengeReq := &authpb.GenerateAuthChallengeRequest{
 		Pubkey: pubkey,
 	}
@@ -70,7 +68,7 @@ func (a *AuthClient) Authenticate() error {
 
 	challenge := challengeResp.GetChallenge()
 
-	signedChallenge := ed25519.Sign(secretKey[:], challenge)
+	signedChallenge := ed25519.Sign(a.key[:], challenge)
 	tokenReq := &authpb.GenerateAuthTokensRequest{
 		Challenge:       challenge,
 		SignedChallenge: signedChallenge,

@@ -2,10 +2,12 @@ package mevton_sdk_go
 
 import (
 	"context"
-	types "github.com/mevton-labs/mevton-sdk-go/generated"
-	"google.golang.org/grpc"
 	"net"
 	"testing"
+
+	types "github.com/mevton-labs/mevton-sdk-go/generated"
+	"google.golang.org/grpc"
+	"google.golang.org/grpc/credentials/insecure"
 )
 
 type MockAuthServiceClient struct {
@@ -47,8 +49,7 @@ func RunServer() {
 
 func TestAuthClient_Authenticate(t *testing.T) {
 	RunServer()
-	ctx := context.Background()
-	conn, err := grpc.DialContext(ctx, "127.0.0.1:50051", grpc.WithInsecure())
+	conn, err := grpc.NewClient("127.0.0.1:50051", grpc.WithTransportCredentials(insecure.NewCredentials()))
 	if err != nil {
 		t.Fatalf("Failed to dial bufnet: %v", err)
 	}
@@ -60,6 +61,7 @@ func TestAuthClient_Authenticate(t *testing.T) {
 		73, 191, 100, 156, 231, 41, 144, 54, 202, 199,
 		75, 1,
 	}
+
 	client, err := NewAuthClient("127.0.0.1:50051", privateKey, nil, nil)
 	if err != nil {
 		t.Fatalf("Cannot create Auth Client: %v", err)
@@ -83,6 +85,10 @@ func TestAuthClient_Authenticate(t *testing.T) {
 	}
 
 	err = client.RefreshAccessToken()
+	if err != nil {
+		t.Fatalf("Cannot Refresh Access Token: %v", err)
+	}
+
 	accessToken = client.AccessToken()
 	expectedNewAccessToken := "new_access_token"
 	if accessToken.Value != expectedNewAccessToken {
