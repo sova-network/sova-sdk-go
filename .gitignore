@@ -1,6 +1,2 @@
 .idea
 .vscode
-
-
-generated/
-!generated/.gitkeep
