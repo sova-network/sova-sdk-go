@@ -18,7 +18,6 @@ type BlockEngineClient struct {
 	accessToken *types.Token
 }
 
-// TODO use conn as a parameter; conn *grpc.ClientConn
 func NewBlockEngine(blockEngineURL string, accessToken *types.Token) (*BlockEngineClient, error) {
 	conn, err := grpc.NewClient(blockEngineURL, grpc.WithTransportCredentials(insecure.NewCredentials()))
 	if err != nil {
