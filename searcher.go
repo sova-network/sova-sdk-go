@@ -5,21 +5,22 @@ import (
 	"crypto/tls"
 	"crypto/x509"
 	"fmt"
-	"google.golang.org/grpc/credentials"
 	"log"
 
-	types "github.com/mevton-labs/mevton-sdk-go/generated"
+	"google.golang.org/grpc/credentials"
+
+	types "github.com/sova-network/sova-sdk-go/generated"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/credentials/insecure"
 	"google.golang.org/grpc/metadata"
 )
 
-type MevtonSearcher struct {
+type SovaSearcher struct {
 	client      types.SearcherServiceClient
 	accessToken *types.Token
 }
 
-func NewMevtonSearcher(searcherURL string, caCert *[]byte, domainName *string) (*MevtonSearcher, error) {
+func NewMevtonSearcher(searcherURL string, caCert *[]byte, domainName *string) (*SovaSearcher, error) {
 	var opts []grpc.DialOption
 
 	if caCert != nil && domainName != nil {
@@ -46,14 +47,14 @@ func NewMevtonSearcher(searcherURL string, caCert *[]byte, domainName *string) (
 	}
 	client := types.NewSearcherServiceClient(conn)
 
-	return &MevtonSearcher{
+	return &SovaSearcher{
 		client:      client,
 		accessToken: nil,
 	}, nil
 }
 
 // Subscribe handles Mempool subscriptions
-func (s *MevtonSearcher) Subscribe(ctx context.Context, subscription *types.MempoolSubscription, onData func(*types.MempoolPacket)) error {
+func (s *SovaSearcher) Subscribe(ctx context.Context, subscription *types.MempoolSubscription, onData func(*types.MempoolPacket)) error {
 	ctx = s.addAuthorizationMetadata(ctx)
 
 	stream, err := s.client.SubscribeMempool(ctx, subscription)
@@ -75,7 +76,7 @@ func (s *MevtonSearcher) Subscribe(ctx context.Context, subscription *types.Memp
 	return nil
 }
 
-func (s *MevtonSearcher) SubscribeByAddress(ctx context.Context, addresses []string, onData func(*types.MempoolPacket)) error {
+func (s *SovaSearcher) SubscribeByAddress(ctx context.Context, addresses []string, onData func(*types.MempoolPacket)) error {
 	return s.Subscribe(ctx, &types.MempoolSubscription{
 		Subscription: &types.MempoolSubscription_Addresses{
 			Addresses: &types.AddressSubscriptionV0{
@@ -85,7 +86,7 @@ func (s *MevtonSearcher) SubscribeByAddress(ctx context.Context, addresses []str
 	}, onData)
 }
 
-func (s *MevtonSearcher) SubscribeByWorkchain(ctx context.Context, workchainId int32, onData func(*types.MempoolPacket)) error {
+func (s *SovaSearcher) SubscribeByWorkchain(ctx context.Context, workchainId int32, onData func(*types.MempoolPacket)) error {
 	return s.Subscribe(ctx, &types.MempoolSubscription{
 		Subscription: &types.MempoolSubscription_Workchain{
 			Workchain: &types.WorkchainSubscriptionV0{
@@ -94,7 +95,7 @@ func (s *MevtonSearcher) SubscribeByWorkchain(ctx context.Context, workchainId i
 		}}, onData)
 }
 
-func (s *MevtonSearcher) SubscribeByWorkchainShard(ctx context.Context, workchainId int32, shard []byte, onData func(*types.MempoolPacket)) error {
+func (s *SovaSearcher) SubscribeByWorkchainShard(ctx context.Context, workchainId int32, shard []byte, onData func(*types.MempoolPacket)) error {
 	return s.Subscribe(ctx, &types.MempoolSubscription{
 		Subscription: &types.MempoolSubscription_WorkchainShard{
 			WorkchainShard: &types.WorkchainShardSubscriptionV0{
@@ -104,7 +105,7 @@ func (s *MevtonSearcher) SubscribeByWorkchainShard(ctx context.Context, workchai
 		}}, onData)
 }
 
-func (s *MevtonSearcher) SubscribeByExternalOutMsgBodyOpcode(ctx context.Context, workchainId int32, shard []byte, opcode int32, onData func(*types.MempoolPacket)) error {
+func (s *SovaSearcher) SubscribeByExternalOutMsgBodyOpcode(ctx context.Context, workchainId int32, shard []byte, opcode int32, onData func(*types.MempoolPacket)) error {
 	return s.Subscribe(ctx, &types.MempoolSubscription{
 		Subscription: &types.MempoolSubscription_ExternalOutMessageBodyOpcode{
 			ExternalOutMessageBodyOpcode: &types.ExternalOutMessageBodyOpcodeSubscriptionV0{
@@ -115,7 +116,7 @@ func (s *MevtonSearcher) SubscribeByExternalOutMsgBodyOpcode(ctx context.Context
 		}}, onData)
 }
 
-func (s *MevtonSearcher) SubscribeByInternalMsgBodyOpcode(ctx context.Context, workchainId int32, shard []byte, opcode int32, onData func(*types.MempoolPacket)) error {
+func (s *SovaSearcher) SubscribeByInternalMsgBodyOpcode(ctx context.Context, workchainId int32, shard []byte, opcode int32, onData func(*types.MempoolPacket)) error {
 	return s.Subscribe(ctx, &types.MempoolSubscription{
 		Subscription: &types.MempoolSubscription_InternalMessageBodyOpcode{
 			InternalMessageBodyOpcode: &types.InternalMessageBodyOpcodeSubscriptionV0{
@@ -126,11 +127,11 @@ func (s *MevtonSearcher) SubscribeByInternalMsgBodyOpcode(ctx context.Context, w
 		}}, onData)
 }
 
-func (s *MevtonSearcher) SetAccessToken(token *types.Token) {
+func (s *SovaSearcher) SetAccessToken(token *types.Token) {
 	s.accessToken = token
 }
 
-func (s *MevtonSearcher) SendBundle(ctx context.Context, bundle *types.Bundle) (*types.SendBundleResponse, error) {
+func (s *SovaSearcher) SendBundle(ctx context.Context, bundle *types.Bundle) (*types.SendBundleResponse, error) {
 	req := bundle
 
 	ctx = s.addAuthorizationMetadata(ctx)
@@ -143,7 +144,7 @@ func (s *MevtonSearcher) SendBundle(ctx context.Context, bundle *types.Bundle) (
 	return resp, nil
 }
 
-func (s *MevtonSearcher) GetTipAddresses(ctx context.Context) (*types.GetTipAddressesResponse, error) {
+func (s *SovaSearcher) GetTipAddresses(ctx context.Context) (*types.GetTipAddressesResponse, error) {
 	req := &types.GetTipAddressesRequest{}
 
 	ctx = s.addAuthorizationMetadata(ctx)
@@ -156,7 +157,7 @@ func (s *MevtonSearcher) GetTipAddresses(ctx context.Context) (*types.GetTipAddr
 	return resp, nil
 }
 
-func (s *MevtonSearcher) addAuthorizationMetadata(ctx context.Context) context.Context {
+func (s *SovaSearcher) addAuthorizationMetadata(ctx context.Context) context.Context {
 	if s.accessToken == nil {
 		return ctx
 	}

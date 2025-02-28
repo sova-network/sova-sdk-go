@@ -5,10 +5,11 @@ import (
 	"crypto/ed25519"
 	"crypto/x509"
 	"fmt"
+
 	"google.golang.org/grpc/credentials"
 	"google.golang.org/grpc/credentials/insecure"
 
-	authpb "github.com/mevton-labs/mevton-sdk-go/generated"
+	authpb "github.com/sova-network/sova-sdk-go/generated"
 	"google.golang.org/grpc"
 )
 

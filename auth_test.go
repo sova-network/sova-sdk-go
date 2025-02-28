@@ -5,7 +5,7 @@ import (
 	"net"
 	"testing"
 
-	types "github.com/mevton-labs/mevton-sdk-go/generated"
+	types "github.com/sova-network/sova-sdk-go/generated"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/credentials/insecure"
 )
@@ -13,7 +13,6 @@ import (
 type MockAuthServiceClient struct {
 	types.AuthServiceServer
 }
-
 
 func (receiver MockAuthServiceClient) GenerateAuthChallenge(context.Context, *types.GenerateAuthChallengeRequest) (*types.GenerateAuthChallengeResponse, error) {
 	return &types.GenerateAuthChallengeResponse{

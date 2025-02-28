@@ -31,7 +31,7 @@ protoc --proto_path=grpc/proto --go_out=generated --go_opt=paths=source_relative
 Add dependencies to your Go project using the following command:
 
 ```bash
-go get -u github.com/mevton-labs/mevton-sdk-go
+go get -u github.com/sova-network/sova-sdk-go
 ```
 
 ## Contributing

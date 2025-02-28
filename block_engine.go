@@ -7,7 +7,7 @@ import (
 	"io"
 	"log"
 
-	types "github.com/mevton-labs/mevton-sdk-go/generated"
+	types "github.com/sova-network/sova-sdk-go/generated"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/credentials/insecure"
 	"google.golang.org/grpc/metadata"
