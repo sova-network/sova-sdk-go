@@ -32,7 +32,7 @@ type BlockEngineValidatorClient interface {
 	// / Validators can submit message to the block engine
 	StreamMempool(ctx context.Context, opts ...grpc.CallOption) (grpc.ClientStreamingClient[MempoolPacket, StreamMempoolResponse], error)
 	// / Validators can subscribe to the block engine to receive a stream of simulated and profitable bundles
-	SubscribeBundles(ctx context.Context, in *SubscribeBundlesRequest, opts ...grpc.CallOption) (grpc.ServerStreamingClient[Bundle], error)
+	SubscribeBundles(ctx context.Context, in *SubscribeBundlesRequest, opts ...grpc.CallOption) (grpc.ServerStreamingClient[ValidatorBundle], error)
 }
 
 type blockEngineValidatorClient struct {
@@ -56,13 +56,13 @@ func (c *blockEngineValidatorClient) StreamMempool(ctx context.Context, opts ...
 // This type alias is provided for backwards compatibility with existing code that references the prior non-generic stream type by name.
 type BlockEngineValidator_StreamMempoolClient = grpc.ClientStreamingClient[MempoolPacket, StreamMempoolResponse]
 
-func (c *blockEngineValidatorClient) SubscribeBundles(ctx context.Context, in *SubscribeBundlesRequest, opts ...grpc.CallOption) (grpc.ServerStreamingClient[Bundle], error) {
+func (c *blockEngineValidatorClient) SubscribeBundles(ctx context.Context, in *SubscribeBundlesRequest, opts ...grpc.CallOption) (grpc.ServerStreamingClient[ValidatorBundle], error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	stream, err := c.cc.NewStream(ctx, &BlockEngineValidator_ServiceDesc.Streams[1], BlockEngineValidator_SubscribeBundles_FullMethodName, cOpts...)
 	if err != nil {
 		return nil, err
 	}
-	x := &grpc.GenericClientStream[SubscribeBundlesRequest, Bundle]{ClientStream: stream}
+	x := &grpc.GenericClientStream[SubscribeBundlesRequest, ValidatorBundle]{ClientStream: stream}
 	if err := x.ClientStream.SendMsg(in); err != nil {
 		return nil, err
 	}
@@ -73,7 +73,7 @@ func (c *blockEngineValidatorClient) SubscribeBundles(ctx context.Context, in *S
 }
 
 // This type alias is provided for backwards compatibility with existing code that references the prior non-generic stream type by name.
-type BlockEngineValidator_SubscribeBundlesClient = grpc.ServerStreamingClient[Bundle]
+type BlockEngineValidator_SubscribeBundlesClient = grpc.ServerStreamingClient[ValidatorBundle]
 
 // BlockEngineValidatorServer is the server API for BlockEngineValidator service.
 // All implementations must embed UnimplementedBlockEngineValidatorServer
@@ -84,7 +84,7 @@ type BlockEngineValidatorServer interface {
 	// / Validators can submit message to the block engine
 	StreamMempool(grpc.ClientStreamingServer[MempoolPacket, StreamMempoolResponse]) error
 	// / Validators can subscribe to the block engine to receive a stream of simulated and profitable bundles
-	SubscribeBundles(*SubscribeBundlesRequest, grpc.ServerStreamingServer[Bundle]) error
+	SubscribeBundles(*SubscribeBundlesRequest, grpc.ServerStreamingServer[ValidatorBundle]) error
 	mustEmbedUnimplementedBlockEngineValidatorServer()
 }
 
@@ -98,7 +98,7 @@ type UnimplementedBlockEngineValidatorServer struct{}
 func (UnimplementedBlockEngineValidatorServer) StreamMempool(grpc.ClientStreamingServer[MempoolPacket, StreamMempoolResponse]) error {
 	return status.Errorf(codes.Unimplemented, "method StreamMempool not implemented")
 }
-func (UnimplementedBlockEngineValidatorServer) SubscribeBundles(*SubscribeBundlesRequest, grpc.ServerStreamingServer[Bundle]) error {
+func (UnimplementedBlockEngineValidatorServer) SubscribeBundles(*SubscribeBundlesRequest, grpc.ServerStreamingServer[ValidatorBundle]) error {
 	return status.Errorf(codes.Unimplemented, "method SubscribeBundles not implemented")
 }
 func (UnimplementedBlockEngineValidatorServer) mustEmbedUnimplementedBlockEngineValidatorServer() {}
@@ -134,11 +134,11 @@ func _BlockEngineValidator_SubscribeBundles_Handler(srv interface{}, stream grpc
 	if err := stream.RecvMsg(m); err != nil {
 		return err
 	}
-	return srv.(BlockEngineValidatorServer).SubscribeBundles(m, &grpc.GenericServerStream[SubscribeBundlesRequest, Bundle]{ServerStream: stream})
+	return srv.(BlockEngineValidatorServer).SubscribeBundles(m, &grpc.GenericServerStream[SubscribeBundlesRequest, ValidatorBundle]{ServerStream: stream})
 }
 
 // This type alias is provided for backwards compatibility with existing code that references the prior non-generic stream type by name.
-type BlockEngineValidator_SubscribeBundlesServer = grpc.ServerStreamingServer[Bundle]
+type BlockEngineValidator_SubscribeBundlesServer = grpc.ServerStreamingServer[ValidatorBundle]
 
 // BlockEngineValidator_ServiceDesc is the grpc.ServiceDesc for BlockEngineValidator service.
 // It's only intended for direct use with grpc.RegisterService,

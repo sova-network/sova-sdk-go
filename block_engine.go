@@ -51,7 +51,7 @@ func (b *BlockEngineClient) StreamMempool(ctx context.Context, stream <-chan *ty
 	return nil
 }
 
-func (b *BlockEngineClient) SubscribeBundles(ctx context.Context, onData func(*types.Bundle)) error {
+func (b *BlockEngineClient) SubscribeBundles(ctx context.Context, onData func(*types.ValidatorBundle)) error {
 	ctx = b.addAuthorizationMetadata(ctx)
 
 	stream, err := b.client.SubscribeBundles(ctx, &types.SubscribeBundlesRequest{})
