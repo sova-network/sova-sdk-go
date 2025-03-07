@@ -1,14 +1,17 @@
-package mevton_sdk_go
+package sova_sdk_go
 
 import (
 	"context"
 	"net"
+	"sync"
 	"testing"
 
 	types "github.com/sova-network/sova-sdk-go/generated"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/credentials/insecure"
 )
+
+var Once sync.Once
 
 type MockAuthServiceClient struct {
 	types.AuthServiceServer
@@ -46,7 +49,7 @@ func RunServer() {
 }
 
 func TestAuthClient_Authenticate(t *testing.T) {
-	RunServer()
+	Once.Do(RunServer)
 	conn, err := grpc.NewClient("127.0.0.1:50051", grpc.WithTransportCredentials(insecure.NewCredentials()))
 	if err != nil {
 		t.Fatalf("Failed to dial bufnet: %v", err)
@@ -64,8 +67,8 @@ func TestAuthClient_Authenticate(t *testing.T) {
 	if err != nil {
 		t.Fatalf("Cannot create Auth Client: %v", err)
 	}
-
-	err = client.Authenticate()
+	ctx := context.Background()
+	err = client.Authenticate(ctx)
 	if err != nil {
 		t.Fatalf("Cannot Authenticate: %v", err)
 	}

@@ -21,25 +21,321 @@ const (
 	_ = protoimpl.EnforceVersion(protoimpl.MaxVersion - 20)
 )
 
+type MempoolOutInternalMessage struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	IhrDisabled bool   `protobuf:"varint,1,opt,name=ihr_disabled,json=ihrDisabled,proto3" json:"ihr_disabled,omitempty"` // ihr_disabled : Bool
+	Bounce      bool   `protobuf:"varint,2,opt,name=bounce,proto3" json:"bounce,omitempty"`                              // bounce : Bool
+	Bounced     bool   `protobuf:"varint,3,opt,name=bounced,proto3" json:"bounced,omitempty"`                            // bounced : Bool
+	Src         []byte `protobuf:"bytes,4,opt,name=src,proto3" json:"src,omitempty"`                                     // src : MsgAddressInt
+	Dest        []byte `protobuf:"bytes,5,opt,name=dest,proto3" json:"dest,omitempty"`                                   // dest : MsgAddressInt
+	Value       []byte `protobuf:"bytes,6,opt,name=value,proto3" json:"value,omitempty"`                                 // value : CurrencyCollection
+	IhrFee      []byte `protobuf:"bytes,7,opt,name=ihr_fee,json=ihrFee,proto3" json:"ihr_fee,omitempty"`                 // ihr_fee : Grams
+	FwdFee      []byte `protobuf:"bytes,8,opt,name=fwd_fee,json=fwdFee,proto3" json:"fwd_fee,omitempty"`                 // fwd_fee : Grams
+	CreatedLt   uint64 `protobuf:"varint,9,opt,name=created_lt,json=createdLt,proto3" json:"created_lt,omitempty"`       // created_lt : uint64
+	CreatedAt   uint32 `protobuf:"varint,10,opt,name=created_at,json=createdAt,proto3" json:"created_at,omitempty"`      // created_at : uint32
+}
+
+func (x *MempoolOutInternalMessage) Reset() {
+	*x = MempoolOutInternalMessage{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_dto_proto_msgTypes[0]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *MempoolOutInternalMessage) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*MempoolOutInternalMessage) ProtoMessage() {}
+
+func (x *MempoolOutInternalMessage) ProtoReflect() protoreflect.Message {
+	mi := &file_dto_proto_msgTypes[0]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use MempoolOutInternalMessage.ProtoReflect.Descriptor instead.
+func (*MempoolOutInternalMessage) Descriptor() ([]byte, []int) {
+	return file_dto_proto_rawDescGZIP(), []int{0}
+}
+
+func (x *MempoolOutInternalMessage) GetIhrDisabled() bool {
+	if x != nil {
+		return x.IhrDisabled
+	}
+	return false
+}
+
+func (x *MempoolOutInternalMessage) GetBounce() bool {
+	if x != nil {
+		return x.Bounce
+	}
+	return false
+}
+
+func (x *MempoolOutInternalMessage) GetBounced() bool {
+	if x != nil {
+		return x.Bounced
+	}
+	return false
+}
+
+func (x *MempoolOutInternalMessage) GetSrc() []byte {
+	if x != nil {
+		return x.Src
+	}
+	return nil
+}
+
+func (x *MempoolOutInternalMessage) GetDest() []byte {
+	if x != nil {
+		return x.Dest
+	}
+	return nil
+}
+
+func (x *MempoolOutInternalMessage) GetValue() []byte {
+	if x != nil {
+		return x.Value
+	}
+	return nil
+}
+
+func (x *MempoolOutInternalMessage) GetIhrFee() []byte {
+	if x != nil {
+		return x.IhrFee
+	}
+	return nil
+}
+
+func (x *MempoolOutInternalMessage) GetFwdFee() []byte {
+	if x != nil {
+		return x.FwdFee
+	}
+	return nil
+}
+
+func (x *MempoolOutInternalMessage) GetCreatedLt() uint64 {
+	if x != nil {
+		return x.CreatedLt
+	}
+	return 0
+}
+
+func (x *MempoolOutInternalMessage) GetCreatedAt() uint32 {
+	if x != nil {
+		return x.CreatedAt
+	}
+	return 0
+}
+
+type MempoolOutExternalOutMessage struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	Src       []byte `protobuf:"bytes,1,opt,name=src,proto3" json:"src,omitempty"`                               // src : MsgAddressInt
+	Dest      []byte `protobuf:"bytes,2,opt,name=dest,proto3" json:"dest,omitempty"`                             // dest : MsgAddressExt
+	CreatedLt uint64 `protobuf:"varint,3,opt,name=created_lt,json=createdLt,proto3" json:"created_lt,omitempty"` // created_lt : uint64
+	CreatedAt uint32 `protobuf:"varint,4,opt,name=created_at,json=createdAt,proto3" json:"created_at,omitempty"` // created_at : uint32
+}
+
+func (x *MempoolOutExternalOutMessage) Reset() {
+	*x = MempoolOutExternalOutMessage{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_dto_proto_msgTypes[1]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *MempoolOutExternalOutMessage) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*MempoolOutExternalOutMessage) ProtoMessage() {}
+
+func (x *MempoolOutExternalOutMessage) ProtoReflect() protoreflect.Message {
+	mi := &file_dto_proto_msgTypes[1]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use MempoolOutExternalOutMessage.ProtoReflect.Descriptor instead.
+func (*MempoolOutExternalOutMessage) Descriptor() ([]byte, []int) {
+	return file_dto_proto_rawDescGZIP(), []int{1}
+}
+
+func (x *MempoolOutExternalOutMessage) GetSrc() []byte {
+	if x != nil {
+		return x.Src
+	}
+	return nil
+}
+
+func (x *MempoolOutExternalOutMessage) GetDest() []byte {
+	if x != nil {
+		return x.Dest
+	}
+	return nil
+}
+
+func (x *MempoolOutExternalOutMessage) GetCreatedLt() uint64 {
+	if x != nil {
+		return x.CreatedLt
+	}
+	return 0
+}
+
+func (x *MempoolOutExternalOutMessage) GetCreatedAt() uint32 {
+	if x != nil {
+		return x.CreatedAt
+	}
+	return 0
+}
+
+type MempoolOutMessage struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	Hash []byte `protobuf:"bytes,1,opt,name=hash,proto3" json:"hash,omitempty"`
+	// Types that are assignable to Info:
+	//
+	//	*MempoolOutMessage_InternalMessage
+	//	*MempoolOutMessage_ExternalOutMessage
+	Info isMempoolOutMessage_Info `protobuf_oneof:"info"`
+	Init []byte                   `protobuf:"bytes,4,opt,name=init,proto3,oneof" json:"init,omitempty"`
+	Body []byte                   `protobuf:"bytes,5,opt,name=body,proto3" json:"body,omitempty"`
+}
+
+func (x *MempoolOutMessage) Reset() {
+	*x = MempoolOutMessage{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_dto_proto_msgTypes[2]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *MempoolOutMessage) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*MempoolOutMessage) ProtoMessage() {}
+
+func (x *MempoolOutMessage) ProtoReflect() protoreflect.Message {
+	mi := &file_dto_proto_msgTypes[2]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use MempoolOutMessage.ProtoReflect.Descriptor instead.
+func (*MempoolOutMessage) Descriptor() ([]byte, []int) {
+	return file_dto_proto_rawDescGZIP(), []int{2}
+}
+
+func (x *MempoolOutMessage) GetHash() []byte {
+	if x != nil {
+		return x.Hash
+	}
+	return nil
+}
+
+func (m *MempoolOutMessage) GetInfo() isMempoolOutMessage_Info {
+	if m != nil {
+		return m.Info
+	}
+	return nil
+}
+
+func (x *MempoolOutMessage) GetInternalMessage() *MempoolOutInternalMessage {
+	if x, ok := x.GetInfo().(*MempoolOutMessage_InternalMessage); ok {
+		return x.InternalMessage
+	}
+	return nil
+}
+
+func (x *MempoolOutMessage) GetExternalOutMessage() *MempoolOutExternalOutMessage {
+	if x, ok := x.GetInfo().(*MempoolOutMessage_ExternalOutMessage); ok {
+		return x.ExternalOutMessage
+	}
+	return nil
+}
+
+func (x *MempoolOutMessage) GetInit() []byte {
+	if x != nil {
+		return x.Init
+	}
+	return nil
+}
+
+func (x *MempoolOutMessage) GetBody() []byte {
+	if x != nil {
+		return x.Body
+	}
+	return nil
+}
+
+type isMempoolOutMessage_Info interface {
+	isMempoolOutMessage_Info()
+}
+
+type MempoolOutMessage_InternalMessage struct {
+	InternalMessage *MempoolOutInternalMessage `protobuf:"bytes,2,opt,name=internal_message,json=internalMessage,proto3,oneof"`
+}
+
+type MempoolOutMessage_ExternalOutMessage struct {
+	ExternalOutMessage *MempoolOutExternalOutMessage `protobuf:"bytes,3,opt,name=external_out_message,json=externalOutMessage,proto3,oneof"`
+}
+
+func (*MempoolOutMessage_InternalMessage) isMempoolOutMessage_Info() {}
+
+func (*MempoolOutMessage_ExternalOutMessage) isMempoolOutMessage_Info() {}
+
 // Represents a single external message in the mempool.
 type MempoolExternalMessage struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	Hash          []byte   `protobuf:"bytes,1,opt,name=hash,proto3" json:"hash,omitempty"`
-	WorkchainId   int32    `protobuf:"varint,2,opt,name=workchain_id,json=workchainId,proto3" json:"workchain_id,omitempty"`
-	Shard         []byte   `protobuf:"bytes,3,opt,name=shard,proto3" json:"shard,omitempty"`
-	Data          []byte   `protobuf:"bytes,4,opt,name=data,proto3" json:"data,omitempty"`
-	StdSmcAddress []byte   `protobuf:"bytes,5,opt,name=std_smc_address,json=stdSmcAddress,proto3" json:"std_smc_address,omitempty"`
-	GasSpent      uint64   `protobuf:"varint,6,opt,name=gas_spent,json=gasSpent,proto3" json:"gas_spent,omitempty"`
-	OutMsgs       [][]byte `protobuf:"bytes,7,rep,name=out_msgs,json=outMsgs,proto3" json:"out_msgs,omitempty"`
+	Hash          []byte               `protobuf:"bytes,1,opt,name=hash,proto3" json:"hash,omitempty"`
+	WorkchainId   int32                `protobuf:"varint,2,opt,name=workchain_id,json=workchainId,proto3" json:"workchain_id,omitempty"`
+	Shard         []byte               `protobuf:"bytes,3,opt,name=shard,proto3" json:"shard,omitempty"`
+	Data          []byte               `protobuf:"bytes,4,opt,name=data,proto3" json:"data,omitempty"`
+	StdSmcAddress []byte               `protobuf:"bytes,5,opt,name=std_smc_address,json=stdSmcAddress,proto3" json:"std_smc_address,omitempty"`
+	GasSpent      uint64               `protobuf:"varint,6,opt,name=gas_spent,json=gasSpent,proto3" json:"gas_spent,omitempty"`
+	OutMsgs       [][]byte             `protobuf:"bytes,7,rep,name=out_msgs,json=outMsgs,proto3" json:"out_msgs,omitempty"`
+	ParsedOutMsgs []*MempoolOutMessage `protobuf:"bytes,8,rep,name=parsed_out_msgs,json=parsedOutMsgs,proto3" json:"parsed_out_msgs,omitempty"`
 }
 
 func (x *MempoolExternalMessage) Reset() {
 	*x = MempoolExternalMessage{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_dto_proto_msgTypes[0]
+		mi := &file_dto_proto_msgTypes[3]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -52,7 +348,7 @@ func (x *MempoolExternalMessage) String() string {
 func (*MempoolExternalMessage) ProtoMessage() {}
 
 func (x *MempoolExternalMessage) ProtoReflect() protoreflect.Message {
-	mi := &file_dto_proto_msgTypes[0]
+	mi := &file_dto_proto_msgTypes[3]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -65,7 +361,7 @@ func (x *MempoolExternalMessage) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use MempoolExternalMessage.ProtoReflect.Descriptor instead.
 func (*MempoolExternalMessage) Descriptor() ([]byte, []int) {
-	return file_dto_proto_rawDescGZIP(), []int{0}
+	return file_dto_proto_rawDescGZIP(), []int{3}
 }
 
 func (x *MempoolExternalMessage) GetHash() []byte {
@@ -117,6 +413,13 @@ func (x *MempoolExternalMessage) GetOutMsgs() [][]byte {
 	return nil
 }
 
+func (x *MempoolExternalMessage) GetParsedOutMsgs() []*MempoolOutMessage {
+	if x != nil {
+		return x.ParsedOutMsgs
+	}
+	return nil
+}
+
 // Represents a collection of messages in the mempool with emulation results.
 type MempoolPacket struct {
 	state         protoimpl.MessageState
@@ -131,7 +434,7 @@ type MempoolPacket struct {
 func (x *MempoolPacket) Reset() {
 	*x = MempoolPacket{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_dto_proto_msgTypes[1]
+		mi := &file_dto_proto_msgTypes[4]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -144,7 +447,7 @@ func (x *MempoolPacket) String() string {
 func (*MempoolPacket) ProtoMessage() {}
 
 func (x *MempoolPacket) ProtoReflect() protoreflect.Message {
-	mi := &file_dto_proto_msgTypes[1]
+	mi := &file_dto_proto_msgTypes[4]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -157,7 +460,7 @@ func (x *MempoolPacket) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use MempoolPacket.ProtoReflect.Descriptor instead.
 func (*MempoolPacket) Descriptor() ([]byte, []int) {
-	return file_dto_proto_rawDescGZIP(), []int{1}
+	return file_dto_proto_rawDescGZIP(), []int{4}
 }
 
 func (x *MempoolPacket) GetServerTs() *timestamppb.Timestamp {
@@ -193,7 +496,7 @@ type ExternalMessage struct {
 func (x *ExternalMessage) Reset() {
 	*x = ExternalMessage{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_dto_proto_msgTypes[2]
+		mi := &file_dto_proto_msgTypes[5]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -206,7 +509,7 @@ func (x *ExternalMessage) String() string {
 func (*ExternalMessage) ProtoMessage() {}
 
 func (x *ExternalMessage) ProtoReflect() protoreflect.Message {
-	mi := &file_dto_proto_msgTypes[2]
+	mi := &file_dto_proto_msgTypes[5]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -219,7 +522,7 @@ func (x *ExternalMessage) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ExternalMessage.ProtoReflect.Descriptor instead.
 func (*ExternalMessage) Descriptor() ([]byte, []int) {
-	return file_dto_proto_rawDescGZIP(), []int{2}
+	return file_dto_proto_rawDescGZIP(), []int{5}
 }
 
 func (x *ExternalMessage) GetData() []byte {
@@ -243,7 +546,7 @@ type ValidatorBundle struct {
 func (x *ValidatorBundle) Reset() {
 	*x = ValidatorBundle{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_dto_proto_msgTypes[3]
+		mi := &file_dto_proto_msgTypes[6]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -256,7 +559,7 @@ func (x *ValidatorBundle) String() string {
 func (*ValidatorBundle) ProtoMessage() {}
 
 func (x *ValidatorBundle) ProtoReflect() protoreflect.Message {
-	mi := &file_dto_proto_msgTypes[3]
+	mi := &file_dto_proto_msgTypes[6]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -269,7 +572,7 @@ func (x *ValidatorBundle) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ValidatorBundle.ProtoReflect.Descriptor instead.
 func (*ValidatorBundle) Descriptor() ([]byte, []int) {
-	return file_dto_proto_rawDescGZIP(), []int{3}
+	return file_dto_proto_rawDescGZIP(), []int{6}
 }
 
 func (x *ValidatorBundle) GetMessage() []*ExternalMessage {
@@ -306,7 +609,7 @@ type Bundle struct {
 func (x *Bundle) Reset() {
 	*x = Bundle{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_dto_proto_msgTypes[4]
+		mi := &file_dto_proto_msgTypes[7]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -319,7 +622,7 @@ func (x *Bundle) String() string {
 func (*Bundle) ProtoMessage() {}
 
 func (x *Bundle) ProtoReflect() protoreflect.Message {
-	mi := &file_dto_proto_msgTypes[4]
+	mi := &file_dto_proto_msgTypes[7]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -332,7 +635,7 @@ func (x *Bundle) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use Bundle.ProtoReflect.Descriptor instead.
 func (*Bundle) Descriptor() ([]byte, []int) {
-	return file_dto_proto_rawDescGZIP(), []int{4}
+	return file_dto_proto_rawDescGZIP(), []int{7}
 }
 
 func (x *Bundle) GetMessage() []*ExternalMessage {
@@ -355,7 +658,50 @@ var file_dto_proto_rawDesc = []byte{
 	0x0a, 0x09, 0x64, 0x74, 0x6f, 0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x12, 0x03, 0x64, 0x74, 0x6f,
 	0x1a, 0x1f, 0x67, 0x6f, 0x6f, 0x67, 0x6c, 0x65, 0x2f, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x62, 0x75,
 	0x66, 0x2f, 0x74, 0x69, 0x6d, 0x65, 0x73, 0x74, 0x61, 0x6d, 0x70, 0x2e, 0x70, 0x72, 0x6f, 0x74,
-	0x6f, 0x22, 0xd9, 0x01, 0x0a, 0x16, 0x4d, 0x65, 0x6d, 0x70, 0x6f, 0x6f, 0x6c, 0x45, 0x78, 0x74,
+	0x6f, 0x22, 0x9c, 0x02, 0x0a, 0x19, 0x4d, 0x65, 0x6d, 0x70, 0x6f, 0x6f, 0x6c, 0x4f, 0x75, 0x74,
+	0x49, 0x6e, 0x74, 0x65, 0x72, 0x6e, 0x61, 0x6c, 0x4d, 0x65, 0x73, 0x73, 0x61, 0x67, 0x65, 0x12,
+	0x21, 0x0a, 0x0c, 0x69, 0x68, 0x72, 0x5f, 0x64, 0x69, 0x73, 0x61, 0x62, 0x6c, 0x65, 0x64, 0x18,
+	0x01, 0x20, 0x01, 0x28, 0x08, 0x52, 0x0b, 0x69, 0x68, 0x72, 0x44, 0x69, 0x73, 0x61, 0x62, 0x6c,
+	0x65, 0x64, 0x12, 0x16, 0x0a, 0x06, 0x62, 0x6f, 0x75, 0x6e, 0x63, 0x65, 0x18, 0x02, 0x20, 0x01,
+	0x28, 0x08, 0x52, 0x06, 0x62, 0x6f, 0x75, 0x6e, 0x63, 0x65, 0x12, 0x18, 0x0a, 0x07, 0x62, 0x6f,
+	0x75, 0x6e, 0x63, 0x65, 0x64, 0x18, 0x03, 0x20, 0x01, 0x28, 0x08, 0x52, 0x07, 0x62, 0x6f, 0x75,
+	0x6e, 0x63, 0x65, 0x64, 0x12, 0x10, 0x0a, 0x03, 0x73, 0x72, 0x63, 0x18, 0x04, 0x20, 0x01, 0x28,
+	0x0c, 0x52, 0x03, 0x73, 0x72, 0x63, 0x12, 0x12, 0x0a, 0x04, 0x64, 0x65, 0x73, 0x74, 0x18, 0x05,
+	0x20, 0x01, 0x28, 0x0c, 0x52, 0x04, 0x64, 0x65, 0x73, 0x74, 0x12, 0x14, 0x0a, 0x05, 0x76, 0x61,
+	0x6c, 0x75, 0x65, 0x18, 0x06, 0x20, 0x01, 0x28, 0x0c, 0x52, 0x05, 0x76, 0x61, 0x6c, 0x75, 0x65,
+	0x12, 0x17, 0x0a, 0x07, 0x69, 0x68, 0x72, 0x5f, 0x66, 0x65, 0x65, 0x18, 0x07, 0x20, 0x01, 0x28,
+	0x0c, 0x52, 0x06, 0x69, 0x68, 0x72, 0x46, 0x65, 0x65, 0x12, 0x17, 0x0a, 0x07, 0x66, 0x77, 0x64,
+	0x5f, 0x66, 0x65, 0x65, 0x18, 0x08, 0x20, 0x01, 0x28, 0x0c, 0x52, 0x06, 0x66, 0x77, 0x64, 0x46,
+	0x65, 0x65, 0x12, 0x1d, 0x0a, 0x0a, 0x63, 0x72, 0x65, 0x61, 0x74, 0x65, 0x64, 0x5f, 0x6c, 0x74,
+	0x18, 0x09, 0x20, 0x01, 0x28, 0x04, 0x52, 0x09, 0x63, 0x72, 0x65, 0x61, 0x74, 0x65, 0x64, 0x4c,
+	0x74, 0x12, 0x1d, 0x0a, 0x0a, 0x63, 0x72, 0x65, 0x61, 0x74, 0x65, 0x64, 0x5f, 0x61, 0x74, 0x18,
+	0x0a, 0x20, 0x01, 0x28, 0x0d, 0x52, 0x09, 0x63, 0x72, 0x65, 0x61, 0x74, 0x65, 0x64, 0x41, 0x74,
+	0x22, 0x82, 0x01, 0x0a, 0x1c, 0x4d, 0x65, 0x6d, 0x70, 0x6f, 0x6f, 0x6c, 0x4f, 0x75, 0x74, 0x45,
+	0x78, 0x74, 0x65, 0x72, 0x6e, 0x61, 0x6c, 0x4f, 0x75, 0x74, 0x4d, 0x65, 0x73, 0x73, 0x61, 0x67,
+	0x65, 0x12, 0x10, 0x0a, 0x03, 0x73, 0x72, 0x63, 0x18, 0x01, 0x20, 0x01, 0x28, 0x0c, 0x52, 0x03,
+	0x73, 0x72, 0x63, 0x12, 0x12, 0x0a, 0x04, 0x64, 0x65, 0x73, 0x74, 0x18, 0x02, 0x20, 0x01, 0x28,
+	0x0c, 0x52, 0x04, 0x64, 0x65, 0x73, 0x74, 0x12, 0x1d, 0x0a, 0x0a, 0x63, 0x72, 0x65, 0x61, 0x74,
+	0x65, 0x64, 0x5f, 0x6c, 0x74, 0x18, 0x03, 0x20, 0x01, 0x28, 0x04, 0x52, 0x09, 0x63, 0x72, 0x65,
+	0x61, 0x74, 0x65, 0x64, 0x4c, 0x74, 0x12, 0x1d, 0x0a, 0x0a, 0x63, 0x72, 0x65, 0x61, 0x74, 0x65,
+	0x64, 0x5f, 0x61, 0x74, 0x18, 0x04, 0x20, 0x01, 0x28, 0x0d, 0x52, 0x09, 0x63, 0x72, 0x65, 0x61,
+	0x74, 0x65, 0x64, 0x41, 0x74, 0x22, 0x89, 0x02, 0x0a, 0x11, 0x4d, 0x65, 0x6d, 0x70, 0x6f, 0x6f,
+	0x6c, 0x4f, 0x75, 0x74, 0x4d, 0x65, 0x73, 0x73, 0x61, 0x67, 0x65, 0x12, 0x12, 0x0a, 0x04, 0x68,
+	0x61, 0x73, 0x68, 0x18, 0x01, 0x20, 0x01, 0x28, 0x0c, 0x52, 0x04, 0x68, 0x61, 0x73, 0x68, 0x12,
+	0x4b, 0x0a, 0x10, 0x69, 0x6e, 0x74, 0x65, 0x72, 0x6e, 0x61, 0x6c, 0x5f, 0x6d, 0x65, 0x73, 0x73,
+	0x61, 0x67, 0x65, 0x18, 0x02, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x1e, 0x2e, 0x64, 0x74, 0x6f, 0x2e,
+	0x4d, 0x65, 0x6d, 0x70, 0x6f, 0x6f, 0x6c, 0x4f, 0x75, 0x74, 0x49, 0x6e, 0x74, 0x65, 0x72, 0x6e,
+	0x61, 0x6c, 0x4d, 0x65, 0x73, 0x73, 0x61, 0x67, 0x65, 0x48, 0x00, 0x52, 0x0f, 0x69, 0x6e, 0x74,
+	0x65, 0x72, 0x6e, 0x61, 0x6c, 0x4d, 0x65, 0x73, 0x73, 0x61, 0x67, 0x65, 0x12, 0x55, 0x0a, 0x14,
+	0x65, 0x78, 0x74, 0x65, 0x72, 0x6e, 0x61, 0x6c, 0x5f, 0x6f, 0x75, 0x74, 0x5f, 0x6d, 0x65, 0x73,
+	0x73, 0x61, 0x67, 0x65, 0x18, 0x03, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x21, 0x2e, 0x64, 0x74, 0x6f,
+	0x2e, 0x4d, 0x65, 0x6d, 0x70, 0x6f, 0x6f, 0x6c, 0x4f, 0x75, 0x74, 0x45, 0x78, 0x74, 0x65, 0x72,
+	0x6e, 0x61, 0x6c, 0x4f, 0x75, 0x74, 0x4d, 0x65, 0x73, 0x73, 0x61, 0x67, 0x65, 0x48, 0x00, 0x52,
+	0x12, 0x65, 0x78, 0x74, 0x65, 0x72, 0x6e, 0x61, 0x6c, 0x4f, 0x75, 0x74, 0x4d, 0x65, 0x73, 0x73,
+	0x61, 0x67, 0x65, 0x12, 0x17, 0x0a, 0x04, 0x69, 0x6e, 0x69, 0x74, 0x18, 0x04, 0x20, 0x01, 0x28,
+	0x0c, 0x48, 0x01, 0x52, 0x04, 0x69, 0x6e, 0x69, 0x74, 0x88, 0x01, 0x01, 0x12, 0x12, 0x0a, 0x04,
+	0x62, 0x6f, 0x64, 0x79, 0x18, 0x05, 0x20, 0x01, 0x28, 0x0c, 0x52, 0x04, 0x62, 0x6f, 0x64, 0x79,
+	0x42, 0x06, 0x0a, 0x04, 0x69, 0x6e, 0x66, 0x6f, 0x42, 0x07, 0x0a, 0x05, 0x5f, 0x69, 0x6e, 0x69,
+	0x74, 0x22, 0x99, 0x02, 0x0a, 0x16, 0x4d, 0x65, 0x6d, 0x70, 0x6f, 0x6f, 0x6c, 0x45, 0x78, 0x74,
 	0x65, 0x72, 0x6e, 0x61, 0x6c, 0x4d, 0x65, 0x73, 0x73, 0x61, 0x67, 0x65, 0x12, 0x12, 0x0a, 0x04,
 	0x68, 0x61, 0x73, 0x68, 0x18, 0x01, 0x20, 0x01, 0x28, 0x0c, 0x52, 0x04, 0x68, 0x61, 0x73, 0x68,
 	0x12, 0x21, 0x0a, 0x0c, 0x77, 0x6f, 0x72, 0x6b, 0x63, 0x68, 0x61, 0x69, 0x6e, 0x5f, 0x69, 0x64,
@@ -368,7 +714,11 @@ var file_dto_proto_rawDesc = []byte{
 	0x64, 0x72, 0x65, 0x73, 0x73, 0x12, 0x1b, 0x0a, 0x09, 0x67, 0x61, 0x73, 0x5f, 0x73, 0x70, 0x65,
 	0x6e, 0x74, 0x18, 0x06, 0x20, 0x01, 0x28, 0x04, 0x52, 0x08, 0x67, 0x61, 0x73, 0x53, 0x70, 0x65,
 	0x6e, 0x74, 0x12, 0x19, 0x0a, 0x08, 0x6f, 0x75, 0x74, 0x5f, 0x6d, 0x73, 0x67, 0x73, 0x18, 0x07,
-	0x20, 0x03, 0x28, 0x0c, 0x52, 0x07, 0x6f, 0x75, 0x74, 0x4d, 0x73, 0x67, 0x73, 0x22, 0xb7, 0x01,
+	0x20, 0x03, 0x28, 0x0c, 0x52, 0x07, 0x6f, 0x75, 0x74, 0x4d, 0x73, 0x67, 0x73, 0x12, 0x3e, 0x0a,
+	0x0f, 0x70, 0x61, 0x72, 0x73, 0x65, 0x64, 0x5f, 0x6f, 0x75, 0x74, 0x5f, 0x6d, 0x73, 0x67, 0x73,
+	0x18, 0x08, 0x20, 0x03, 0x28, 0x0b, 0x32, 0x16, 0x2e, 0x64, 0x74, 0x6f, 0x2e, 0x4d, 0x65, 0x6d,
+	0x70, 0x6f, 0x6f, 0x6c, 0x4f, 0x75, 0x74, 0x4d, 0x65, 0x73, 0x73, 0x61, 0x67, 0x65, 0x52, 0x0d,
+	0x70, 0x61, 0x72, 0x73, 0x65, 0x64, 0x4f, 0x75, 0x74, 0x4d, 0x73, 0x67, 0x73, 0x22, 0xb7, 0x01,
 	0x0a, 0x0d, 0x4d, 0x65, 0x6d, 0x70, 0x6f, 0x6f, 0x6c, 0x50, 0x61, 0x63, 0x6b, 0x65, 0x74, 0x12,
 	0x37, 0x0a, 0x09, 0x73, 0x65, 0x72, 0x76, 0x65, 0x72, 0x5f, 0x74, 0x73, 0x18, 0x01, 0x20, 0x01,
 	0x28, 0x0b, 0x32, 0x1a, 0x2e, 0x67, 0x6f, 0x6f, 0x67, 0x6c, 0x65, 0x2e, 0x70, 0x72, 0x6f, 0x74,
@@ -416,27 +766,33 @@ func file_dto_proto_rawDescGZIP() []byte {
 	return file_dto_proto_rawDescData
 }
 
-var file_dto_proto_msgTypes = make([]protoimpl.MessageInfo, 5)
+var file_dto_proto_msgTypes = make([]protoimpl.MessageInfo, 8)
 var file_dto_proto_goTypes = []any{
-	(*MempoolExternalMessage)(nil), // 0: dto.MempoolExternalMessage
-	(*MempoolPacket)(nil),          // 1: dto.MempoolPacket
-	(*ExternalMessage)(nil),        // 2: dto.ExternalMessage
-	(*ValidatorBundle)(nil),        // 3: dto.ValidatorBundle
-	(*Bundle)(nil),                 // 4: dto.Bundle
-	(*timestamppb.Timestamp)(nil),  // 5: google.protobuf.Timestamp
+	(*MempoolOutInternalMessage)(nil),    // 0: dto.MempoolOutInternalMessage
+	(*MempoolOutExternalOutMessage)(nil), // 1: dto.MempoolOutExternalOutMessage
+	(*MempoolOutMessage)(nil),            // 2: dto.MempoolOutMessage
+	(*MempoolExternalMessage)(nil),       // 3: dto.MempoolExternalMessage
+	(*MempoolPacket)(nil),                // 4: dto.MempoolPacket
+	(*ExternalMessage)(nil),              // 5: dto.ExternalMessage
+	(*ValidatorBundle)(nil),              // 6: dto.ValidatorBundle
+	(*Bundle)(nil),                       // 7: dto.Bundle
+	(*timestamppb.Timestamp)(nil),        // 8: google.protobuf.Timestamp
 }
 var file_dto_proto_depIdxs = []int32{
-	5, // 0: dto.MempoolPacket.server_ts:type_name -> google.protobuf.Timestamp
-	0, // 1: dto.MempoolPacket.external_messages:type_name -> dto.MempoolExternalMessage
-	2, // 2: dto.ValidatorBundle.message:type_name -> dto.ExternalMessage
-	5, // 3: dto.ValidatorBundle.expiration_ns:type_name -> google.protobuf.Timestamp
-	2, // 4: dto.Bundle.message:type_name -> dto.ExternalMessage
-	5, // 5: dto.Bundle.expiration_ns:type_name -> google.protobuf.Timestamp
-	6, // [6:6] is the sub-list for method output_type
-	6, // [6:6] is the sub-list for method input_type
-	6, // [6:6] is the sub-list for extension type_name
-	6, // [6:6] is the sub-list for extension extendee
-	0, // [0:6] is the sub-list for field type_name
+	0, // 0: dto.MempoolOutMessage.internal_message:type_name -> dto.MempoolOutInternalMessage
+	1, // 1: dto.MempoolOutMessage.external_out_message:type_name -> dto.MempoolOutExternalOutMessage
+	2, // 2: dto.MempoolExternalMessage.parsed_out_msgs:type_name -> dto.MempoolOutMessage
+	8, // 3: dto.MempoolPacket.server_ts:type_name -> google.protobuf.Timestamp
+	3, // 4: dto.MempoolPacket.external_messages:type_name -> dto.MempoolExternalMessage
+	5, // 5: dto.ValidatorBundle.message:type_name -> dto.ExternalMessage
+	8, // 6: dto.ValidatorBundle.expiration_ns:type_name -> google.protobuf.Timestamp
+	5, // 7: dto.Bundle.message:type_name -> dto.ExternalMessage
+	8, // 8: dto.Bundle.expiration_ns:type_name -> google.protobuf.Timestamp
+	9, // [9:9] is the sub-list for method output_type
+	9, // [9:9] is the sub-list for method input_type
+	9, // [9:9] is the sub-list for extension type_name
+	9, // [9:9] is the sub-list for extension extendee
+	0, // [0:9] is the sub-list for field type_name
 }
 
 func init() { file_dto_proto_init() }
@@ -446,7 +802,7 @@ func file_dto_proto_init() {
 	}
 	if !protoimpl.UnsafeEnabled {
 		file_dto_proto_msgTypes[0].Exporter = func(v any, i int) any {
-			switch v := v.(*MempoolExternalMessage); i {
+			switch v := v.(*MempoolOutInternalMessage); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -458,7 +814,7 @@ func file_dto_proto_init() {
 			}
 		}
 		file_dto_proto_msgTypes[1].Exporter = func(v any, i int) any {
-			switch v := v.(*MempoolPacket); i {
+			switch v := v.(*MempoolOutExternalOutMessage); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -470,7 +826,7 @@ func file_dto_proto_init() {
 			}
 		}
 		file_dto_proto_msgTypes[2].Exporter = func(v any, i int) any {
-			switch v := v.(*ExternalMessage); i {
+			switch v := v.(*MempoolOutMessage); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -482,7 +838,7 @@ func file_dto_proto_init() {
 			}
 		}
 		file_dto_proto_msgTypes[3].Exporter = func(v any, i int) any {
-			switch v := v.(*ValidatorBundle); i {
+			switch v := v.(*MempoolExternalMessage); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -494,6 +850,42 @@ func file_dto_proto_init() {
 			}
 		}
 		file_dto_proto_msgTypes[4].Exporter = func(v any, i int) any {
+			switch v := v.(*MempoolPacket); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_dto_proto_msgTypes[5].Exporter = func(v any, i int) any {
+			switch v := v.(*ExternalMessage); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_dto_proto_msgTypes[6].Exporter = func(v any, i int) any {
+			switch v := v.(*ValidatorBundle); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_dto_proto_msgTypes[7].Exporter = func(v any, i int) any {
 			switch v := v.(*Bundle); i {
 			case 0:
 				return &v.state
@@ -506,13 +898,17 @@ func file_dto_proto_init() {
 			}
 		}
 	}
+	file_dto_proto_msgTypes[2].OneofWrappers = []any{
+		(*MempoolOutMessage_InternalMessage)(nil),
+		(*MempoolOutMessage_ExternalOutMessage)(nil),
+	}
 	type x struct{}
 	out := protoimpl.TypeBuilder{
 		File: protoimpl.DescBuilder{
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: file_dto_proto_rawDesc,
 			NumEnums:      0,
-			NumMessages:   5,
+			NumMessages:   8,
 			NumExtensions: 0,
 			NumServices:   0,
 		},
