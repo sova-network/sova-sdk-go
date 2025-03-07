@@ -24,7 +24,7 @@ func NewTestnetClient() *SovaClient {
 
 	return NewCustomClient(
 		"testnet-engine.mevton.com:30010",
-		&caPem, 
+		&caPem,
 		&domainName,
 		nil,
 	)
