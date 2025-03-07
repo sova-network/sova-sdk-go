@@ -50,11 +50,11 @@ func TestClient(t *testing.T) {
 		}
 
 		searcher.SetAccessToken(&types.Token{Value: "access_token"})
-		searcher.SubscribeByWorkchain(context.Background(), 0, func(mp *types.MempoolPacket) {
+		_ = searcher.SubscribeByWorkchain(context.Background(), 0, func(mp *types.MempoolPacket) {
 			t.Logf("got mempool packet: %v", mp)
 		})
 
-		searcher.SubscribeByAddress(context.Background(), []string{"addres1", "address2"}, func(mp *types.MempoolPacket) {
+		_ = searcher.SubscribeByAddress(context.Background(), []string{"addres1", "address2"}, func(mp *types.MempoolPacket) {
 			t.Logf("got mempool packet: %v", mp)
 		})
 	})
