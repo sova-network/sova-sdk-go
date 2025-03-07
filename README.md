@@ -1,14 +1,14 @@
-# Mevton SDK
+# Sova SDK Go
 
-Mevton SDK is a Go library for interacting with the Mevton MEV Block Engine and Searcher services.
+Sova SDK Go is a Go library for interacting with the Sova Block Engine and Searcher services.
 It provides functionalities for authentication, streaming mempool transactions, subscribing to bundles, and sending bundles.
 
 ## Features
 
 - **Authentication**: Authenticate using your private key to obtain access and refresh tokens.
-- **Streaming Mempool Transactions**: Stream transactions from the client to the Mevton MEV Block Engine.
+- **Streaming Mempool Transactions**: Stream transactions from the client to the Sova Block Engine.
 - **Subscribe to Bundles**: Subscribe to receive a stream of simulated and profitable bundles.
-- **Send Bundles**: Send bundles to the Mevton MEV Block Engine for processing.
+- **Send Bundles**: Send bundles to the Sova Block Engine for processing.
 
 ## Installation
 

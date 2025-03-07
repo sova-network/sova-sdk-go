@@ -1,4 +1,4 @@
-package mevton_sdk_go
+package sova_sdk_go
 
 import (
 	"context"
@@ -22,7 +22,7 @@ type AuthClient struct {
 }
 
 // NewAuthClient creates a new AuthClient instance.
-func NewAuthClient(authUrl string, privateKey []byte, caPem *[]byte, domainName *string) (*AuthClient, error) {
+func NewAuthClient(authUrl string, privateKey []byte, caPem *string, domainName *string) (*AuthClient, error) {
 	var conn *grpc.ClientConn
 	var err error
 
@@ -55,8 +55,8 @@ func NewAuthClient(authUrl string, privateKey []byte, caPem *[]byte, domainName 
 	}, nil
 }
 
-func (a *AuthClient) Authenticate() error {
-	ctx := context.Background()
+func (a *AuthClient) Authenticate(ctx context.Context) error {
+
 	pubkey := a.key.Public().(ed25519.PublicKey)
 	challengeReq := &authpb.GenerateAuthChallengeRequest{
 		Pubkey: pubkey,

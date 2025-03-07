@@ -1,9 +1,10 @@
-package mevton_sdk_go
+package sova_sdk_go
 
 import (
 	"context"
 	"crypto/tls"
 	"crypto/x509"
+	"errors"
 	"fmt"
 	"log"
 
@@ -20,37 +21,43 @@ type SovaSearcher struct {
 	accessToken *types.Token
 }
 
-func NewMevtonSearcher(searcherURL string, caCert *[]byte, domainName *string) (*SovaSearcher, error) {
-	var opts []grpc.DialOption
+func NewSovaSearcher(searcherURL string, caCert *string, domainName *string) (*SovaSearcher, error) {
+	return NewSovaSearcherWithAccessToken(searcherURL, caCert, domainName, nil)
+}
 
-	if caCert != nil && domainName != nil {
-		// Set up TLS using the provided CA certificate and domain name
+// NewWithAccessToken function
+func NewSovaSearcherWithAccessToken(url string, caPem *string, domainName *string, accessToken *types.Token) (*SovaSearcher, error) {
+	var conn *grpc.ClientConn
+	var err error
+
+	if caPem != nil && domainName != nil {
 		certPool := x509.NewCertPool()
-		if !certPool.AppendCertsFromPEM([]byte(*caCert)) {
-			return nil, fmt.Errorf("failed to parse CA certificate")
+		if ok := certPool.AppendCertsFromPEM([]byte(*caPem)); !ok {
+			return nil, errors.New("failed to parse CA certificate")
 		}
 
-		tlsConfig := &tls.Config{
+		creds := credentials.NewTLS(&tls.Config{
 			RootCAs:    certPool,
 			ServerName: *domainName,
+		})
+
+		conn, err = grpc.NewClient(url, grpc.WithTransportCredentials(creds))
+		if err != nil {
+			return nil, fmt.Errorf("failed to connect with TLS: %w", err)
 		}
-
-		creds := credentials.NewTLS(tlsConfig)
-		opts = append(opts, grpc.WithTransportCredentials(creds))
 	} else {
-		opts = append(opts, grpc.WithTransportCredentials(insecure.NewCredentials()))
+		conn, err = grpc.NewClient(url, grpc.WithTransportCredentials(insecure.NewCredentials()))
+		if err != nil {
+			return nil, fmt.Errorf("failed to connect: %w", err)
+		}
 	}
 
-	conn, err := grpc.NewClient(searcherURL, opts...)
-	if err != nil {
-		return nil, fmt.Errorf("failed to connect to searcher service: %v", err)
+	client := &SovaSearcher{
+		client:      types.NewSearcherServiceClient(conn),
+		accessToken: accessToken,
 	}
-	client := types.NewSearcherServiceClient(conn)
 
-	return &SovaSearcher{
-		client:      client,
-		accessToken: nil,
-	}, nil
+	return client, nil
 }
 
 // Subscribe handles Mempool subscriptions

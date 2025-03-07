@@ -1,4 +1,4 @@
-module github.com/sova-network/sova-sdk-go 
+module github.com/sova-network/sova-sdk-go
 
 go 1.21
 

@@ -1,4 +1,4 @@
-package mevton_sdk_go
+package sova_sdk_go
 
 import (
 	"context"

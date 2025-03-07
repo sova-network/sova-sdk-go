@@ -1,4 +1,4 @@
-package mevton_sdk_go
+package sova_sdk_go
 
 import (
 	"context"
@@ -64,8 +64,8 @@ func TestAuthClient_Authenticate(t *testing.T) {
 	if err != nil {
 		t.Fatalf("Cannot create Auth Client: %v", err)
 	}
-
-	err = client.Authenticate()
+	ctx := context.Background()
+	err = client.Authenticate(ctx)
 	if err != nil {
 		t.Fatalf("Cannot Authenticate: %v", err)
 	}
