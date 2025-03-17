@@ -164,6 +164,30 @@ func (s *SovaSearcher) GetTipAddresses(ctx context.Context) (*types.GetTipAddres
 	return resp, nil
 }
 
+func (s *SovaSearcher) SubscribeBundleResult(ctx context.Context, onData func(*types.BundleResult)) error {
+	req := &types.SubscribeBundleResultsRequest{}
+
+	ctx = s.addAuthorizationMetadata(ctx)
+
+	stream, err := s.client.SubscribeBundleResults(ctx, req)
+	if err != nil {
+		return fmt.Errorf("stream subscription error: %v", err)
+	}
+
+	go func() {
+		for {
+			packet, err := stream.Recv()
+			if err != nil {
+				log.Printf("stream error: %v", err)
+				return
+			}
+			onData(packet)
+		}
+	}()
+
+	return nil
+}
+
 func (s *SovaSearcher) addAuthorizationMetadata(ctx context.Context) context.Context {
 	if s.accessToken == nil {
 		return ctx
