@@ -34,6 +34,16 @@ Add dependencies to your Go project using the following command:
 go get -u github.com/sova-network/sova-sdk-go
 ```
 
+## Examples
+To run example 
+
+```
+git clone https://github.com/sova-network/sova-sdk-go.git
+cd sova-sdk-go/exemples/search_frontrun
+go run .
+```
+
+
 ## Contributing
 
 Contributions are welcome! Please open an issue or submit a pull request with any changes or enhancements. Follow these steps to contribute:
