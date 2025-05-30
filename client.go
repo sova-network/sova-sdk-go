@@ -19,11 +19,23 @@ func (s *SovaClient) NewMainnetClient() (*SovaClient, error) {
 }
 
 func NewTestnetClient() *SovaClient {
-	domainName := "testnet-engine.mevton.com"
+	domainName := "testnet-engine.sova.network"
 	caPem := TESTNET_CA_PEM
 
 	return NewCustomClient(
-		"testnet-engine.mevton.com:30010",
+		"testnet-engine.sova.network:30020",
+		&caPem,
+		&domainName,
+		nil,
+	)
+}
+
+func NewMainnetClient() *SovaClient {
+	domainName := "engine.sova.network"
+	caPem := MAINNET_CA_PEM
+
+	return NewCustomClient(
+		"engine.sova.network:30020",
 		&caPem,
 		&domainName,
 		nil,

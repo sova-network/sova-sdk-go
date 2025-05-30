@@ -10,7 +10,7 @@ import (
 func TestClient(t *testing.T) {
 	Once.Do(RunServer)
 	t.Run("NewMainnetClient", func(t *testing.T) {
-		t.Skip("not released")
+		NewMainnetClient()
 	})
 	t.Run("NewTestnetClient", func(t *testing.T) {
 		NewTestnetClient()
