@@ -53,28 +53,24 @@ func TestTestnetSuccessfulClient(t *testing.T) {
 	})
 	assert.NoError(t, err)
 
-	select {
-	// Wait for mempool packet
-	case msg := <-mempoolCh:
-		t.Logf("got mempool packet: %v", len(msg.ExternalMessages))
+	msg := <-mempoolCh
+	t.Logf("got mempool packet: %v", len(msg.ExternalMessages))
 
-		// Send bundle
-		res, err := searcher.SendBundle(ctx, &types.Bundle{
-			Message: []*types.ExternalMessage{ // Correct type
-				{
-					Data: []byte(msg.ExternalMessages[0].Data),
-				},
+	// Send bundle
+	res, err := searcher.SendBundle(ctx, &types.Bundle{
+		Message: []*types.ExternalMessage{ // Correct type
+			{
+				Data: []byte(msg.ExternalMessages[0].Data),
 			},
-			ExpirationNs: nil,
-		})
+		},
+		ExpirationNs: nil,
+	})
 
-		assert.Error(t, err)
-		assert.ErrorContains(t, err, "rpc error: code = InvalidArgument desc = Invalid bundle, tip amount is 0")
-		assert.Nil(t, res)
+	assert.Error(t, err)
+	assert.ErrorContains(t, err, "rpc error: code = InvalidArgument desc = Invalid bundle, tip amount is 0")
+	assert.Nil(t, res)
 
-		cancel()
-		return
-	}
+	cancel()
 }
 
 func TestMainnetSuccessfulClient(t *testing.T) {
@@ -119,26 +115,22 @@ func TestMainnetSuccessfulClient(t *testing.T) {
 	})
 	assert.NoError(t, err)
 
-	select {
-	// Wait for mempool packet
-	case msg := <-mempoolCh:
-		t.Logf("got mempool packet: %v", len(msg.ExternalMessages))
+	msg := <-mempoolCh
+	t.Logf("got mempool packet: %v", len(msg.ExternalMessages))
 
-		// Send bundle
-		res, err := searcher.SendBundle(ctx, &types.Bundle{
-			Message: []*types.ExternalMessage{ // Correct type
-				{
-					Data: []byte(msg.ExternalMessages[0].Data),
-				},
+	// Send bundle
+	res, err := searcher.SendBundle(ctx, &types.Bundle{
+		Message: []*types.ExternalMessage{ // Correct type
+			{
+				Data: []byte(msg.ExternalMessages[0].Data),
 			},
-			ExpirationNs: nil,
-		})
+		},
+		ExpirationNs: nil,
+	})
 
-		assert.Error(t, err)
-		assert.ErrorContains(t, err, "rpc error: code = InvalidArgument desc = Invalid bundle, tip amount is 0")
-		assert.Nil(t, res)
+	assert.Error(t, err)
+	assert.ErrorContains(t, err, "rpc error: code = InvalidArgument desc = Invalid bundle, tip amount is 0")
+	assert.Nil(t, res)
 
-		cancel()
-		return
-	}
+	cancel()
 }
