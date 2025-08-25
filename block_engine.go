@@ -4,6 +4,9 @@ import (
 	"context"
 	"errors"
 	"fmt"
+	"google.golang.org/grpc/keepalive"
+	"time"
+
 	"io"
 	"log"
 
@@ -19,7 +22,15 @@ type BlockEngineClient struct {
 }
 
 func NewBlockEngine(blockEngineURL string, accessToken *types.Token) (*BlockEngineClient, error) {
-	conn, err := grpc.NewClient(blockEngineURL, grpc.WithTransportCredentials(insecure.NewCredentials()))
+	conn, err := grpc.NewClient(
+		blockEngineURL,
+		grpc.WithTransportCredentials(insecure.NewCredentials()),
+		grpc.WithKeepaliveParams(keepalive.ClientParameters{
+			Time:                10 * time.Second,
+			Timeout:             60 * time.Second,
+			PermitWithoutStream: true,
+		}),
+	)
 	if err != nil {
 		return nil, fmt.Errorf("failed to connect to block engine: %v", err)
 	}
